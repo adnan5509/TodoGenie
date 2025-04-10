@@ -8,7 +8,10 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class TaskService {
 
-  tasks = signal<Task[]>([]);
+  private tasks = signal<Task[]>([]);
+
+  allTasks = this.tasks.asReadonly;
+
   constructor() { }
 
   addTask(taskData: { title: string, description: string }) {

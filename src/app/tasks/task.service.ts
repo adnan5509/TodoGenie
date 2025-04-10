@@ -10,7 +10,7 @@ export class TaskService {
 
   private tasks = signal<Task[]>([]);
 
-  allTasks = this.tasks.asReadonly;
+  allTasks = this.tasks.asReadonly();
 
   constructor() { }
 

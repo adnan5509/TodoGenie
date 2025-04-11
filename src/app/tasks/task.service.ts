@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { Task, TaskStatus } from './task.model';
 import { v4 as uuidv4 } from 'uuid';
+import { LogService } from '../log.service';
 
 
 @Injectable({
@@ -12,7 +13,7 @@ export class TaskService {
 
   allTasks = this.tasks.asReadonly();
 
-  constructor() {
+  constructor(private logService: LogService) {
     const savedTask = localStorage.getItem('tasks');
 
     if (savedTask) {
@@ -32,6 +33,8 @@ export class TaskService {
 
     this.tasks.set([...this.tasks(), newTask]);
     localStorage.setItem('tasks', JSON.stringify(this.tasks()));
+
+    this.logService.log(`Task added: ${newTask.title}`);
   }
 
   updateTaskStatus(taskId: string, newStatus: TaskStatus) {
@@ -43,6 +46,7 @@ export class TaskService {
     }));
     localStorage.setItem('tasks', JSON.stringify(this.tasks()));
 
+    this.logService.log(`This task status has been updated to : ${newStatus}`);
   }
   getSampleTasks() {
     const sampleTasks = [

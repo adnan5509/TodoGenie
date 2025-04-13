@@ -1,7 +1,7 @@
-import { Component, computed, input } from '@angular/core';
+import { Component, computed, inject, input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
-import { Task, TaskStatus } from '../../task.model';
+import { Task, TASK_STATUS_OPTION, TaskStatus } from '../../task.model';
 import { TaskService } from '../../task.service';
 
 @Component({
@@ -15,6 +15,7 @@ export class TaskItemComponent {
 
   constructor(private taskService: TaskService) { }
 
+  taskStatusOptions = inject(TASK_STATUS_OPTION);
   task = input.required<Task>();
   taskStatus = computed(() => {
     switch (this.task().status) {
